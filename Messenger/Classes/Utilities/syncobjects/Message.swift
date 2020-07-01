@@ -29,6 +29,10 @@ class Message: SyncObject {
 	@objc dynamic var photoHeight: Int = 0
 	@objc dynamic var videoDuration: Int = 0
 	@objc dynamic var audioDuration: Int = 0
+    
+    @objc dynamic var fileName = ""
+    @objc dynamic var fileExt = ""
+    @objc dynamic var fileSize: Int = 0
 
 	@objc dynamic var latitude: CLLocationDegrees = 0
 	@objc dynamic var longitude: CLLocationDegrees = 0

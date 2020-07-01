@@ -237,7 +237,9 @@
 		29ED990D23CCA28F0036BE27 /* DispatchQueue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ED990C23CCA28F0036BE27 /* DispatchQueue+Extension.swift */; };
 		29F2B905245EABBD00648921 /* NYTPhotoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F2B904245EABBC00648921 /* NYTPhotoSource.swift */; };
 		6C0888E250EDDE30BCA104EB /* Pods_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A8835041C05399266378E9 /* Pods_app.framework */; };
-		838270F124A4A72400171ABD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 838270F024A4A72400171ABD /* GoogleService-Info.plist */; };
+		832B1FD724AC86E6003F1B33 /* RCMessageFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B1FD624AC86E6003F1B33 /* RCMessageFileCell.swift */; };
+		837C69FA24AC78530025ADAC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 837C69F924AC78530025ADAC /* GoogleService-Info.plist */; };
+		837C69FC24AC7C590025ADAC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837C69FB24AC7C590025ADAC /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -478,7 +480,9 @@
 		29ED990C23CCA28F0036BE27 /* DispatchQueue+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extension.swift"; sourceTree = "<group>"; };
 		29F2B904245EABBC00648921 /* NYTPhotoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYTPhotoSource.swift; sourceTree = "<group>"; };
 		7393A6F3A4D6270AF7ACDCFA /* Pods-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.release.xcconfig"; sourceTree = "<group>"; };
-		838270F024A4A72400171ABD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		832B1FD624AC86E6003F1B33 /* RCMessageFileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCMessageFileCell.swift; sourceTree = "<group>"; };
+		837C69F924AC78530025ADAC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		837C69FB24AC7C590025ADAC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		FC28F63C1114893726170446 /* Pods-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -488,6 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C0888E250EDDE30BCA104EB /* Pods_app.framework in Frameworks */,
+				837C69FC24AC7C590025ADAC /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,6 +1307,7 @@
 				29B0034A23C78B240092A338 /* RCMessagePhotoCell.swift */,
 				29B0034C23C78B250092A338 /* RCMessageTextCell.swift */,
 				29B0034723C78B240092A338 /* RCMessageVideoCell.swift */,
+				832B1FD624AC86E6003F1B33 /* RCMessageFileCell.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -1369,7 +1375,7 @@
 				29D29EF81D9A59E4006CA074 /* AppDelegate.swift */,
 				29D29F001D9A59E4006CA074 /* Assets.xcassets */,
 				29D29F021D9A59E4006CA074 /* LaunchScreen.storyboard */,
-				838270F024A4A72400171ABD /* GoogleService-Info.plist */,
+				837C69F924AC78530025ADAC /* GoogleService-Info.plist */,
 				29D29F051D9A59E4006CA074 /* Info.plist */,
 			);
 			path = app;
@@ -1405,6 +1411,7 @@
 		BD5925BEFAEDA190E57A7F14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				837C69FB24AC7C590025ADAC /* MobileCoreServices.framework */,
 				297DBA0A1DCB5F13008551F2 /* PushKit.framework */,
 				14A8835041C05399266378E9 /* Pods_app.framework */,
 			);
@@ -1444,7 +1451,7 @@
 				TargetAttributes = {
 					29D29EF01D9A59E4006CA074 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = UUF85U8HLF;
+						DevelopmentTeam = 46W25C8KDG;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1521,7 +1528,6 @@
 				296021971F2CF5F600544468 /* CacheView.xib in Resources */,
 				295E65B3234F26830098D8B6 /* mkchat_attach@2x.png in Resources */,
 				298990711F1B6FFD00AC73B3 /* privacy.html in Resources */,
-				838270F124A4A72400171ABD /* GoogleService-Info.plist in Resources */,
 				2960215D1F2CF5F600544468 /* CountriesView.xib in Resources */,
 				296021711F2CF5F600544468 /* StickersCell.xib in Resources */,
 				2960219F1F2CF5F600544468 /* WallpapersView.xib in Resources */,
@@ -1543,6 +1549,7 @@
 				29181BAF239AEE9900062FBC /* callvideo_switch2@2x.png in Resources */,
 				29181BB3239AEE9900062FBC /* callvideo_mute2@2x.png in Resources */,
 				2960218F1F2CF5F600544468 /* BlockedView.xib in Resources */,
+				837C69FA24AC78530025ADAC /* GoogleService-Info.plist in Resources */,
 				2989906D1F1B6FFD00AC73B3 /* wallpapers06@2x.jpg in Resources */,
 				29181BA4239AEE8B00062FBC /* callaudio_speaker2@2x.png in Resources */,
 				2990E66E239ADFAC008CFB9C /* CallAudioView.xib in Resources */,
@@ -1679,6 +1686,7 @@
 				29A292E923462CF700684B56 /* RCPrivateChatView.swift in Sources */,
 				295D93872094930400A222CA /* GroupCreateView.swift in Sources */,
 				293064DF23D5D30D00B67C0E /* Friends.swift in Sources */,
+				832B1FD724AC86E6003F1B33 /* RCMessageFileCell.swift in Sources */,
 				29A292E423462CF700684B56 /* MKPrivateChatView.swift in Sources */,
 				29B002FD23C785190092A338 /* MediaUpload.swift in Sources */,
 				296469A823D8F3860090FE90 /* Users.swift in Sources */,
@@ -1945,7 +1953,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_ENTITLEMENTS = app/app.entitlements;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = UUF85U8HLF;
+				DEVELOPMENT_TEAM = 46W25C8KDG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = app/Info.plist;
@@ -1953,7 +1961,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 6.1;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.relatedcode.messenger;
+				PRODUCT_BUNDLE_IDENTIFIER = omi.relatedcode.messenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1971,7 +1979,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_ENTITLEMENTS = app/app.entitlements;
-				DEVELOPMENT_TEAM = UUF85U8HLF;
+				DEVELOPMENT_TEAM = 46W25C8KDG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = app/Info.plist;
@@ -1979,7 +1987,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 6.1;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.relatedcode.messenger;
+				PRODUCT_BUNDLE_IDENTIFIER = omi.relatedcode.messenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

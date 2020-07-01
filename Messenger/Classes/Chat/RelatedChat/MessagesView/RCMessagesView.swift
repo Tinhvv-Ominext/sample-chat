@@ -301,6 +301,10 @@ class RCMessagesView: UIViewController {
 	func actionSendMessage(_ text: String) {
 
 	}
+    
+    func actionSendFile() {
+        
+    }
 
 	// MARK: - Helper methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -359,6 +363,7 @@ extension RCMessagesView: UITableViewDataSource {
 			if (rcmessage.type == MESSAGE_PHOTO)	{ return cellForMessagePhoto(tableView, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_VIDEO)	{ return cellForMessageVideo(tableView, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_AUDIO)	{ return cellForMessageAudio(tableView, at: indexPath)		}
+            if (rcmessage.type == MESSAGE_FILE)    { return cellForMessageText(tableView, at: indexPath)        }
 			if (rcmessage.type == MESSAGE_LOCATION)	{ return cellForMessageLocation(tableView, at: indexPath)	}
 		}
 
@@ -477,6 +482,7 @@ extension RCMessagesView: UITableViewDelegate {
 			if (rcmessage.type == MESSAGE_EMOJI)	{ return RCMessageEmojiCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_PHOTO)	{ return RCMessagePhotoCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_VIDEO)	{ return RCMessageVideoCell.height(self, at: indexPath)		}
+            if (rcmessage.type == MESSAGE_FILE)    { return RCMessageTextCell.height(self, at: indexPath)        }
 			if (rcmessage.type == MESSAGE_AUDIO)	{ return RCMessageAudioCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_LOCATION)	{ return RCMessageLocationCell.height(self, at: indexPath)	}
 		}

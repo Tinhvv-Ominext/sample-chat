@@ -30,6 +30,10 @@ class RCMessage: NSObject {
 	var photoHeight: Int = 0
 	var videoDuration: Int = 0
 	var audioDuration: Int = 0
+    
+    var fileName: String = ""
+    var fileExt: String = ""
+    var fileSize: Int = 0
 
 	var latitude: CLLocationDegrees = 0
 	var longitude: CLLocationDegrees = 0
@@ -51,6 +55,14 @@ class RCMessage: NSObject {
 
 	var audioStatus: Int32 = AUDIOSTATUS_STOPPED
 	var mediaStatus: Int32 = MEDIASTATUS_UNKNOWN
+    
+    var fileNameFull: String {
+        return fileName + "." + fileExt
+    }
+    
+    var fileSizeFull: String {
+        return "\(fileSize / 1000) KB"
+    }
 
 	// MARK: - Initialization methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -79,6 +91,10 @@ class RCMessage: NSObject {
 		self.photoHeight = message.photoHeight
 		self.videoDuration = message.videoDuration
 		self.audioDuration = message.audioDuration
+        
+        self.fileName = message.fileName
+        self.fileExt = message.fileExt
+        self.fileSize = message.fileSize
 
 		self.latitude = message.latitude
 		self.longitude = message.longitude

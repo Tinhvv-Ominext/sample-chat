@@ -39,6 +39,7 @@
 #define		MESSAGE_EMOJI						@"emoji"
 #define		MESSAGE_PHOTO						@"photo"
 #define		MESSAGE_VIDEO						@"video"
+#define     MESSAGE_FILE                      @"file"
 #define		MESSAGE_AUDIO						@"audio"
 #define		MESSAGE_LOCATION					@"location"
 //---------------------------------------------------------------------------------

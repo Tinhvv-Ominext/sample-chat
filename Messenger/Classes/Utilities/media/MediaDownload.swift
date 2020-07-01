@@ -112,6 +112,7 @@ class MediaDownload: NSObject {
 	class func pathPhoto(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "jpg")	}
 	class func pathVideo(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "mp4")	}
 	class func pathAudio(_ name: String) -> String?	{ return path(dir: "media", name: name, ext: "m4a")	}
+    class func pathFile(_ name: String, ext: String) -> String?    { return path(dir: "media", name: name, ext: ext)    }
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -151,6 +152,8 @@ class MediaDownload: NSObject {
 	class func savePhoto(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "jpg", manual: true)	}
 	class func saveVideo(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "mp4", manual: true)	}
 	class func saveAudio(_ name: String, data: Data)	{ save(data: data, dir: "media", name: name, ext: "m4a", manual: true)	}
+    
+    class func saveFile(_ name: String, data: Data, ext: String)    { save(data: data, dir: "media", name: name, ext: ext, manual: true)    }
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------

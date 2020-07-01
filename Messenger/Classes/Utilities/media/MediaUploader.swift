@@ -85,6 +85,7 @@ class MediaUploader: NSObject {
 		if (message.type == MESSAGE_PHOTO) { uploadPhoto(message: message, completion: completion) }
 		if (message.type == MESSAGE_VIDEO) { uploadVideo(message: message, completion: completion) }
 		if (message.type == MESSAGE_AUDIO) { uploadAudio(message: message, completion: completion) }
+        if (message.type == MESSAGE_FILE) { uploadFile(message: message, completion: completion) }
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,6 +115,20 @@ class MediaUploader: NSObject {
 			} else { completion(NSError.description("Media file error.", code: 102)) }
 		} else { completion(NSError.description("Missing media file.", code: 103)) }
 	}
+    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    private func uploadFile(message: Message, completion: @escaping (_ error: Error?) -> Void) {
+
+        if let path = MediaDownload.pathFile(message.objectId, ext: message.fileExt) {
+            if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
+                if let crypted = Cryptor.encrypt(data: data, chatId: message.chatId) {
+                    MediaUpload.file(message.objectId, ext: message.fileExt, data: crypted, completion: { error in
+                        completion(error)
+                    })
+                } else { completion(NSError.description("Media encryption error.", code: 101)) }
+            } else { completion(NSError.description("Media file error.", code: 102)) }
+        } else { completion(NSError.description("Missing media file.", code: 103)) }
+    }
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private func uploadAudio(message: Message, completion: @escaping (_ error: Error?) -> Void) {

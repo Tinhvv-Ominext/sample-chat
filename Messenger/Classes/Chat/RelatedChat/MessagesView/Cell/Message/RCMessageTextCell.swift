@@ -40,7 +40,7 @@ class RCMessageTextCell: RCMessageCell {
 
 		textView.textColor = rcmessage.incoming ? RCDefaults.textTextColorIncoming : RCDefaults.textTextColorOutgoing
 
-		textView.text = rcmessage.text
+        textView.text = rcmessage.text
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------

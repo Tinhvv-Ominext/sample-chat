@@ -13,6 +13,7 @@ import RealmSwift
 import ProgressHUD
 import CoreLocation
 import SoundManager
+import MobileCoreServices
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
@@ -399,9 +400,9 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 
 	// MARK: - Message send methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func messageSend(text: String?, photo: UIImage?, video: URL?, audio: String?) {
+    func messageSend(text: String?, photo: UIImage?, video: URL?, audio: String?, file: URL? = nil) {
 
-		Messages.send(chatId: chatId, text: text, photo: photo, video: video, audio: audio)
+        Messages.send(chatId: chatId, text: text, photo: photo, video: video, audio: audio, file: file)
 
 		Shortcut.update(userId: recipientId)
 	}
@@ -439,6 +440,10 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 		let alertLocation = UIAlertAction(title: "Location", style: .default) { action in
 			self.actionLocation()
 		}
+        
+        let alertFile = UIAlertAction(title: "Files", style: .default) { (action) in
+            self.actionSendFile()
+        }
 
 		let configuration	= UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
 		let imageCamera		= UIImage(systemName: "camera", withConfiguration: configuration)
@@ -454,11 +459,21 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 		alertAudio.setValue(imageAudio, forKey: "image");		alert.addAction(alertAudio)
 		alertStickers.setValue(imageStickers, forKey: "image");	alert.addAction(alertStickers)
 		alertLocation.setValue(imageLocation, forKey: "image");	alert.addAction(alertLocation)
+        alertFile.setValue(imagePhoto, forKey: "image"); alert.addAction(alertFile   )
 
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
 		present(alert, animated: true)
 	}
+    
+    override func actionSendFile() {
+        let formatDocument = ["com.adobe.pdf ", "public.image", "public.text", "com.apple.iwork.pages.pages", "com.apple.keynote.key", "com.apple.package", "public.composite-content", "kUTTypePDF", "com.pkware.zip-archive"]
+        
+        let documentPickerController = UIDocumentPickerViewController(documentTypes: formatDocument, in: .import)
+        documentPickerController.delegate = self
+        documentPickerController.allowsMultipleSelection = true
+        self.present(documentPickerController, animated: true, completion: nil)
+    }
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	override func actionSendMessage(_ text: String) {
@@ -655,7 +670,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 
 // MARK: - UIImagePickerControllerDelegate
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-extension RCPrivateChatView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension RCPrivateChatView: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
@@ -667,7 +682,12 @@ extension RCPrivateChatView: UIImagePickerControllerDelegate, UINavigationContro
 
 		picker.dismiss(animated: true)
 	}
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        messageSend(text: nil, photo: nil, video: nil, audio: nil, file: urls.first)
+    }
 }
+
 
 // MARK: - AudioDelegate
 //-------------------------------------------------------------------------------------------------------------------------------------------------

@@ -31,6 +31,12 @@ class MediaUpload: NSObject {
 
 		FireStorage.upload(data: data, dir: "media", name: name, ext: "mp4", completion: completion)
 	}
+    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    class func file(_ name: String, ext: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {
+
+        FireStorage.upload(data: data, dir: "media", name: name, ext: ext, completion: completion)
+    }
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	class func audio(_ name: String, data: Data, completion: @escaping (_ error: Error?) -> Void) {

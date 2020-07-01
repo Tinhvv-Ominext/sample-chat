@@ -16,7 +16,7 @@ import ProgressHUD
 class Messages: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func send(chatId: String, text: String?, photo: UIImage?, video: URL?, audio: String?) {
+    class func send(chatId: String, text: String?, photo: UIImage?, video: URL?, audio: String?, file: URL? = nil ) {
 
 		let message = Message()
 
@@ -31,6 +31,7 @@ class Messages: NSObject {
 		else if (photo != nil)	{ sendMessagePhoto(message: message, photo: photo!)		}
 		else if (video != nil)	{ sendMessageVideo(message: message, video: video!)		}
 		else if (audio != nil)	{ sendMessageAudio(message: message, audio: audio!)		}
+        else if (file != nil)    { sendMessageFile(message: message, file: file!)        }
 		else					{ sendMessageLoaction(message: message)					}
 	}
 
@@ -156,6 +157,25 @@ class Messages: NSObject {
 			ProgressHUD.showError("Video data error.")
 		}
 	}
+    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    private class func sendMessageFile(message: Message, file: URL) {
+
+        message.type = MESSAGE_FILE
+        message.text = "File message"
+
+        message.fileName = file.lastPathComponent
+        message.isMediaQueued = true
+        message.fileExt = file.pathExtension
+
+        if let data = try? Data(contentsOf: file) {
+            message.fileSize = data.count
+            MediaDownload.saveFile(message.objectId, data: data, ext: file.pathExtension)
+            createMessage(message: message)
+        } else {
+            ProgressHUD.showError("File data error.")
+        }
+    }
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	private class func sendMessageAudio(message: Message, audio: String) {
