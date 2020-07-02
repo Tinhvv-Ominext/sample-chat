@@ -27,7 +27,7 @@ class RCMessageCell: UITableViewCell {
 
 		self.indexPath = indexPath
 		self.messagesView = messagesView
-
+        let rcmessage = messagesView.rcmessageAt(indexPath)
 		backgroundColor = UIColor.clear
 
 		if (viewBubble == nil) {
@@ -56,6 +56,8 @@ class RCMessageCell: UITableViewCell {
 			contentView.addSubview(labelAvatar)
 		}
 		labelAvatar.text = messagesView.avatarInitials(indexPath)
+        imageAvatar.isHidden = !rcmessage.incoming
+        labelAvatar.textAlignment = rcmessage.incoming ? .left : .right
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -73,16 +75,13 @@ class RCMessageCell: UITableViewCell {
 		let diameter = RCDefaults.avatarDiameter
 		let xAvatar = rcmessage.incoming ? RCDefaults.avatarMarginLeft : (widthTable - 5 - diameter)
 		
-        if !rcmessage.incoming {
-            imageAvatar.isHidden = true
-            labelAvatar.textAlignment = .right
-        } else {
-            imageAvatar.isHidden = false
-            labelAvatar.textAlignment = .left
+        if rcmessage.incoming {
             imageAvatar.frame = CGRect(x: xAvatar, y: 0, width: diameter, height: diameter)
+            labelAvatar.frame = CGRect(x: xBubble, y: -4, width: widthTable - 100, height: diameter)
+        } else {
+            labelAvatar.frame = CGRect(x: 100, y: -4, width: widthTable - 105, height: diameter)
         }
         
-        labelAvatar.frame = CGRect(x: xBubble, y: -4, width: viewBubble.frame.width, height: diameter)
 	}
 
 	// MARK: - Gesture recognizer methods

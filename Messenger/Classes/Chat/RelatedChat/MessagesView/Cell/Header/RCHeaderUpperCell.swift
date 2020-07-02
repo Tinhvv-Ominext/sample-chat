@@ -18,26 +18,36 @@ class RCHeaderUpperCell: UITableViewCell {
 	private var messagesView: RCMessagesView!
 
 	private var labelText: UILabel!
-
+    private var separatorView: UIView!
+    
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func bindData(_ messagesView: RCMessagesView, at indexPath: IndexPath) {
 
 		self.indexPath = indexPath
 		self.messagesView = messagesView
 
-		let rcmessage = messagesView.rcmessageAt(indexPath)
-
 		backgroundColor = UIColor.clear
+        
+        if separatorView == nil {
+            separatorView = UIView()
+            separatorView.backgroundColor = .systemGroupedBackground
+            contentView.addSubview(separatorView)
+        }
 
 		if (labelText == nil) {
 			labelText = UILabel()
 			labelText.font = RCDefaults.headerUpperFont
 			labelText.textColor = RCDefaults.headerUpperColor
+            labelText.backgroundColor = .white
 			contentView.addSubview(labelText)
 		}
-
-		labelText.textAlignment = rcmessage.incoming ? .center : .center
+        
+        labelText.isHidden = messagesView.textHeaderUpper(indexPath) == nil
+        separatorView.isHidden = labelText.isHidden
+        
+		labelText.textAlignment = .center
 		labelText.text = messagesView.textHeaderUpper(indexPath)
+        
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -47,10 +57,11 @@ class RCHeaderUpperCell: UITableViewCell {
 
 		let widthTable = messagesView.tableView.frame.size.width
 
-		let width = widthTable - RCDefaults.headerUpperLeft - RCDefaults.headerUpperRight
-		let height = (labelText.text != nil) ? RCDefaults.headerUpperHeight : 0
-
-		labelText.frame = CGRect(x: RCDefaults.headerUpperLeft, y: 0, width: width, height: height)
+        if let rect = messagesView.textHeaderUpper(indexPath)?.boundingRect(with: CGSize(width: widthTable, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: RCDefaults.headerUpperFont], context: nil) {
+            separatorView.frame = CGRect(x: RCDefaults.commonMargin, y: RCDefaults.headerUpperHeight / 2, width: widthTable - RCDefaults.commonMargin * 2, height: 1)
+            labelText.frame = CGRect(x: (widthTable - rect.width) / 2 - RCDefaults.commonMargin, y: RCDefaults.commonMargin, width: rect.width + RCDefaults.commonMargin * 2, height: RCDefaults.headerUpperHeight - RCDefaults.commonMargin * 2)
+        }
+        
 	}
 
 	// MARK: - Size methods

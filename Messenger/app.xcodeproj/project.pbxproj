@@ -238,6 +238,7 @@
 		29F2B905245EABBD00648921 /* NYTPhotoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F2B904245EABBC00648921 /* NYTPhotoSource.swift */; };
 		6C0888E250EDDE30BCA104EB /* Pods_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A8835041C05399266378E9 /* Pods_app.framework */; };
 		832B1FD724AC86E6003F1B33 /* RCMessageFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B1FD624AC86E6003F1B33 /* RCMessageFileCell.swift */; };
+		832FB8B424ADCADD00D41D49 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832FB8B324ADCADD00D41D49 /* CircleProgressView.swift */; };
 		837C69FA24AC78530025ADAC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 837C69F924AC78530025ADAC /* GoogleService-Info.plist */; };
 		837C69FC24AC7C590025ADAC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837C69FB24AC7C590025ADAC /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
@@ -481,6 +482,7 @@
 		29F2B904245EABBC00648921 /* NYTPhotoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYTPhotoSource.swift; sourceTree = "<group>"; };
 		7393A6F3A4D6270AF7ACDCFA /* Pods-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.release.xcconfig"; sourceTree = "<group>"; };
 		832B1FD624AC86E6003F1B33 /* RCMessageFileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCMessageFileCell.swift; sourceTree = "<group>"; };
+		832FB8B324ADCADD00D41D49 /* CircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		837C69F924AC78530025ADAC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		837C69FB24AC7C590025ADAC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		FC28F63C1114893726170446 /* Pods-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-app/Pods-app.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1266,6 +1268,7 @@
 				29B0032523C78AF50092A338 /* MenuItem */,
 				29B0033623C78AF50092A338 /* RCMessagesView.swift */,
 				29B0033723C78AF50092A338 /* RCMessagesView.xib */,
+				832FB8B324ADCADD00D41D49 /* CircleProgressView.swift */,
 			);
 			path = MessagesView;
 			sourceTree = "<group>";
@@ -1807,6 +1810,7 @@
 				296021961F2CF5F600544468 /* CacheView.swift in Sources */,
 				29B0034D23C78B250092A338 /* RCMessageEmojiCell.swift in Sources */,
 				29EABE4E20ECAC3C00A13F26 /* NavController.swift in Sources */,
+				832FB8B424ADCADD00D41D49 /* CircleProgressView.swift in Sources */,
 				2983DAC523EED1CA009CB9BB /* Single.swift in Sources */,
 				29BED8B3230B07A40071C11F /* Audio.swift in Sources */,
 				2955F553240712DE001C8D2A /* MenuExtension.swift in Sources */,

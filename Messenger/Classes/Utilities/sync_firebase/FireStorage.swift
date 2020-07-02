@@ -43,4 +43,30 @@ class FireStorage: NSObject {
 			}
 		}
 	}
+    
+    class func download(dir: String, name: String, ext: String, progress: @escaping(Double) -> Void, completion: @escaping (_ path: String, _ error: Error?) -> Void) {
+
+        let storage = "\(dir)/\(name).\(ext)"
+        let reference = Storage.storage().reference(withPath: storage)
+
+        let file = "\(name).\(ext)"
+        let path = Dir.document(dir, and: file)
+
+        let downloadTask = reference.write(toFile: URL(fileURLWithPath: path))
+        
+        downloadTask.observe(.progress) { (snapshot) in
+            let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount)
+              / Double(snapshot.progress!.totalUnitCount)
+            print("Done: \(percentComplete)%")
+            progress(percentComplete)
+        }
+        
+        downloadTask.observe(.success) { (snapshot) in
+            completion(path, nil)
+        }
+        
+        downloadTask.observe(.failure) { (snapshot) in
+            completion("", snapshot.error)
+        }
+    }
 }

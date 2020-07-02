@@ -63,6 +63,16 @@ class RCMessage: NSObject {
     var fileSizeFull: String {
         return "\(fileSize / 1000) KB"
     }
+    
+    var createdAtDate: Date {
+        return Date(timeIntervalSince1970: TimeInterval(createdAt/1000))
+    }
+    
+    var createdAtString: String {
+        let df = DateFormatter()
+        df.dateFormat = "hh:mm a"
+        return df.string(from: createdAtDate)
+    }
 
 	// MARK: - Initialization methods
 	//---------------------------------------------------------------------------------------------------------------------------------------------

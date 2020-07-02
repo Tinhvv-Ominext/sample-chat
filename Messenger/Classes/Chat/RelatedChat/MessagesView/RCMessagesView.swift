@@ -45,18 +45,14 @@ class RCMessagesView: UIViewController {
 		navigationItem.titleView = viewTitle
 
 		tableView.register(RCHeaderUpperCell.self, forCellReuseIdentifier: "RCHeaderUpperCell")
-		tableView.register(RCHeaderLowerCell.self, forCellReuseIdentifier: "RCHeaderLowerCell")
 
 		tableView.register(RCMessageTextCell.self, forCellReuseIdentifier: "RCMessageTextCell")
 		tableView.register(RCMessageEmojiCell.self, forCellReuseIdentifier: "RCMessageEmojiCell")
 		tableView.register(RCMessagePhotoCell.self, forCellReuseIdentifier: "RCMessagePhotoCell")
-		tableView.register(RCMessageVideoCell.self, forCellReuseIdentifier: "RCMessageVideoCell")
-		tableView.register(RCMessageAudioCell.self, forCellReuseIdentifier: "RCMessageAudioCell")
-		tableView.register(RCMessageLocationCell.self, forCellReuseIdentifier: "RCMessageLocationCell")
         tableView.register(RCMessageFileCell.self, forCellReuseIdentifier: "RCMessageFileCell")
-
-		tableView.register(RCFooterUpperCell.self, forCellReuseIdentifier: "RCFooterUpperCell")
-		tableView.register(RCFooterLowerCell.self, forCellReuseIdentifier: "RCFooterLowerCell")
+        tableView.register(RCMessageVideoCell.self, forCellReuseIdentifier: "RCMessageVideoCell")
+        
+        tableView.register(RCFooterLowerCell.self, forCellReuseIdentifier: "RCFooterLowerCell")
 
 		tableView.tableHeaderView = viewLoadEarlier
 
@@ -342,7 +338,7 @@ extension RCMessagesView: UITableViewDataSource {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-		return 5
+		return 3
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -355,21 +351,17 @@ extension RCMessagesView: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
 		if (indexPath.row == 0)						{ return cellForHeaderUpper(tableView, at: indexPath)		}
-		if (indexPath.row == 1)						{ return cellForHeaderLower(tableView, at: indexPath)		}
 
-		if (indexPath.row == 2) {
+		if (indexPath.row == 1) {
 			let rcmessage = rcmessageAt(indexPath)
 			if (rcmessage.type == MESSAGE_TEXT)		{ return cellForMessageText(tableView, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_EMOJI)	{ return cellForMessageEmoji(tableView, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_PHOTO)	{ return cellForMessagePhoto(tableView, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_VIDEO)	{ return cellForMessageVideo(tableView, at: indexPath)		}
-			if (rcmessage.type == MESSAGE_AUDIO)	{ return cellForMessageAudio(tableView, at: indexPath)		}
             if (rcmessage.type == MESSAGE_FILE)    { return cellForMessageFile(tableView, at: indexPath)        }
-			if (rcmessage.type == MESSAGE_LOCATION)	{ return cellForMessageLocation(tableView, at: indexPath)	}
 		}
 
-		if (indexPath.row == 3)						{ return cellForFooterUpper(tableView, at: indexPath)		}
-		if (indexPath.row == 4)						{ return cellForFooterLower(tableView, at: indexPath)		}
+		if (indexPath.row == 2)						{ return cellForFooterLower(tableView, at: indexPath)		}
 
 		return UITableViewCell()
 	}
@@ -483,21 +475,17 @@ extension RCMessagesView: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
 		if (indexPath.row == 0)						{ return RCHeaderUpperCell.height(self, at: indexPath)		}
-		if (indexPath.row == 1)						{ return RCHeaderLowerCell.height(self, at: indexPath)		}
 
-		if (indexPath.row == 2) {
+		if (indexPath.row == 1) {
 			let rcmessage = rcmessageAt(indexPath)
 			if (rcmessage.type == MESSAGE_TEXT)		{ return RCMessageTextCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_EMOJI)	{ return RCMessageEmojiCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_PHOTO)	{ return RCMessagePhotoCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_VIDEO)	{ return RCMessageVideoCell.height(self, at: indexPath)		}
             if (rcmessage.type == MESSAGE_FILE)    { return RCMessageFileCell.height(self, at: indexPath)        }
-			if (rcmessage.type == MESSAGE_AUDIO)	{ return RCMessageAudioCell.height(self, at: indexPath)		}
-			if (rcmessage.type == MESSAGE_LOCATION)	{ return RCMessageLocationCell.height(self, at: indexPath)	}
 		}
 
-		if (indexPath.row == 3)						{ return RCFooterUpperCell.height(self, at: indexPath)		}
-		if (indexPath.row == 4)						{ return RCFooterLowerCell.height(self, at: indexPath)	+ 20	}
+        if (indexPath.row == 2)						{ return RCDefaults.commonMargin * 2	}
 
 		return 0
 	}

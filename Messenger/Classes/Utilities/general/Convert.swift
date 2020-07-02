@@ -33,7 +33,7 @@ class Convert: NSObject {
 		let date = Date.date(timestamp: timestamp)
 
 		let formatter = DateFormatter()
-		formatter.dateFormat = "dd MMMM, HH:mm"
+		formatter.dateFormat = "MMMM dd"
 
 		return formatter.string(from: date)
 	}

@@ -21,7 +21,7 @@ enum RCDefaults {
 
 	// Header upper
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	static let headerUpperHeight			= CGFloat(20)
+	static let headerUpperHeight			= CGFloat(30)
 	static let headerUpperLeft				= CGFloat(10)
 	static let headerUpperRight				= CGFloat(10)
 
@@ -70,7 +70,7 @@ enum RCDefaults {
 	static let avatarBackColor				= UIColor.systemGray4
 	static let avatarTextColor				= UIColor.darkGray
 
-	static let avatarFont					= UIFont.systemFont(ofSize: 10)
+	static let avatarFont					= UIFont.systemFont(ofSize: 12)
 
 	// Text cell
 	//---------------------------------------------------------------------------------------------------------------------------------------------

@@ -196,8 +196,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 
 		if (rcmessage.type == MESSAGE_PHOTO)	{ RCPhotoLoader.start(rcmessage, in: tableView)		}
 		if (rcmessage.type == MESSAGE_VIDEO)	{ RCVideoLoader.start(rcmessage, in: tableView)		}
-		if (rcmessage.type == MESSAGE_AUDIO)	{ RCAudioLoader.start(rcmessage, in: tableView)		}
-		if (rcmessage.type == MESSAGE_LOCATION)	{ RCLocationLoader.start(rcmessage, in: tableView)	}
+		
 	}
 
 	// MARK: - Avatar methods
@@ -205,7 +204,7 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 	override func avatarInitials(_ indexPath: IndexPath) -> String {
 
 		let rcmessage = rcmessageAt(indexPath)
-		return rcmessage.userInitials
+        return rcmessage.incoming ? rcmessage.userInitials + ", " + rcmessage.createdAtString : rcmessage.createdAtString
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -236,11 +235,18 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	override func textHeaderUpper(_ indexPath: IndexPath) -> String? {
 
-		if (indexPath.section % 3 == 0) {
+		if (indexPath.section == 0) {
 			let rcmessage = rcmessageAt(indexPath)
 			return Convert.timestampToDayMonthTime(rcmessage.createdAt)
 		} else {
-			return nil
+            let previousMessage = rcmessageAt(IndexPath(row: 0, section: indexPath.section - 1))
+            let rcmessage = rcmessageAt(indexPath)
+            
+            if Calendar.current.isDate(previousMessage.createdAtDate, inSameDayAs: rcmessage.createdAtDate) {
+                return nil
+            } else {
+                return Convert.timestampToDayMonthTime(rcmessage.createdAt)
+            }
 		}
 	}
 
@@ -259,14 +265,14 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	override func textFooterLower(_ indexPath: IndexPath) -> String? {
 
-		let rcmessage = rcmessageAt(indexPath)
-		if (rcmessage.outgoing) {
-			let message = messageAt(indexPath)
-			if (message.syncRequired)	{ return STATUS_QUEUED }
-			if (message.isMediaQueued)	{ return STATUS_QUEUED }
-			if (message.isMediaFailed)	{ return STATUS_FAILED }
-			return (message.createdAt > lastRead) ? STATUS_SENT : STATUS_READ
-		}
+//		let rcmessage = rcmessageAt(indexPath)
+//		if (rcmessage.outgoing) {
+//			let message = messageAt(indexPath)
+//			if (message.syncRequired)	{ return STATUS_QUEUED }
+//			if (message.isMediaQueued)	{ return STATUS_QUEUED }
+//			if (message.isMediaFailed)	{ return STATUS_FAILED }
+//			return (message.createdAt > lastRead) ? STATUS_SENT : STATUS_READ
+//		}
 		return nil
 	}
 
@@ -431,14 +437,9 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 		let alertVideo = UIAlertAction(title: "Video", style: .default) { action in
 			ImagePicker.videoLibrary(target: self, edit: true)
 		}
-		let alertAudio = UIAlertAction(title: "Audio", style: .default) { action in
-			self.actionAudio()
-		}
+		
 		let alertStickers = UIAlertAction(title: "Sticker", style: .default) { action in
 			self.actionStickers()
-		}
-		let alertLocation = UIAlertAction(title: "Location", style: .default) { action in
-			self.actionLocation()
 		}
         
         let alertFile = UIAlertAction(title: "Files", style: .default) { (action) in
@@ -449,16 +450,12 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 		let imageCamera		= UIImage(systemName: "camera", withConfiguration: configuration)
 		let imagePhoto		= UIImage(systemName: "photo", withConfiguration: configuration)
 		let imageVideo		= UIImage(systemName: "play.rectangle", withConfiguration: configuration)
-		let imageAudio		= UIImage(systemName: "music.mic", withConfiguration: configuration)
 		let imageStickers	= UIImage(systemName: "tortoise", withConfiguration: configuration)
-		let imageLocation	= UIImage(systemName: "location", withConfiguration: configuration)
 
 		alertCamera.setValue(imageCamera, forKey: "image"); 	alert.addAction(alertCamera)
 		alertPhoto.setValue(imagePhoto, forKey: "image");		alert.addAction(alertPhoto)
 		alertVideo.setValue(imageVideo, forKey: "image");		alert.addAction(alertVideo)
-		alertAudio.setValue(imageAudio, forKey: "image");		alert.addAction(alertAudio)
 		alertStickers.setValue(imageStickers, forKey: "image");	alert.addAction(alertStickers)
-		alertLocation.setValue(imageLocation, forKey: "image");	alert.addAction(alertLocation)
         alertFile.setValue(imagePhoto, forKey: "image"); alert.addAction(alertFile   )
 
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -525,7 +522,6 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 		if (rcmessage.mediaStatus == MEDIASTATUS_MANUAL) {
 			if (rcmessage.type == MESSAGE_PHOTO) { RCPhotoLoader.manual(rcmessage, in: tableView) }
 			if (rcmessage.type == MESSAGE_VIDEO) { RCVideoLoader.manual(rcmessage, in: tableView) }
-			if (rcmessage.type == MESSAGE_AUDIO) { RCAudioLoader.manual(rcmessage, in: tableView) }
 		}
 
 		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {

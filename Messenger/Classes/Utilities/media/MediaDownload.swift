@@ -48,6 +48,12 @@ class MediaDownload: NSObject {
 
 		start(dir: "media", name: name, ext: "m4a", manual: true, completion: completion)
 	}
+    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    class func startFile(_ name: String, ext: String, progress: @escaping (Double) -> Void, completion: @escaping (_ path: String, _ error: Error?) -> Void) {
+
+        start(dir: "media", name: name, ext: ext, manual: true, progress: progress, completion: completion)
+    }
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -105,6 +111,61 @@ class MediaDownload: NSObject {
 			}
 		}
 	}
+    
+    private class func start(dir: String, name: String, ext: String, manual: Bool, progress: @escaping (Double) -> Void,
+                             completion: @escaping (_ path: String, _ error: Error?) -> Void) {
+
+        let file = "\(name).\(ext)"
+        let path = Dir.document(dir, and: file)
+
+        let fileManual = file + ".manual"
+        let pathManual = Dir.document(dir, and: fileManual)
+
+        let fileLoading = file + ".loading"
+        let pathLoading = Dir.document(dir, and: fileLoading)
+
+        // Check if file is already downloaded
+        //-----------------------------------------------------------------------------------------------------------------------------------------
+        if (File.exist(path: path)) {
+            completion(path, nil)
+            return
+        }
+
+        // Check if manual download is required
+        //-----------------------------------------------------------------------------------------------------------------------------------------
+        if (manual) {
+            if (File.exist(path: pathManual)) {
+                completion("", NSError.description("Manual download required.", code: 101))
+                return
+            }
+            try? "manual".write(toFile: pathManual, atomically: false, encoding: .utf8)
+        }
+
+        // Check if file is currently downloading
+        //-----------------------------------------------------------------------------------------------------------------------------------------
+        let time = Int(Date().timeIntervalSince1970)
+
+        if (File.exist(path: pathLoading)) {
+            if let temp = try? String(contentsOfFile: pathLoading, encoding: .utf8) {
+                if let check = Int(temp) {
+                    if (time - check < 60) {
+                        completion("", NSError.description("Already downloading.", code: 102))
+                        return
+                    }
+                }
+            }
+        }
+        try? "\(time)".write(toFile: pathLoading, atomically: false, encoding: .utf8)
+
+        // Download the file
+        //-----------------------------------------------------------------------------------------------------------------------------------------
+        FireStorage.download(dir: dir, name: name, ext: ext, progress: progress) { (path, error) in
+            File.remove(path: pathLoading)
+            DispatchQueue.main.async {
+                completion(path, error)
+            }
+        }
+    }
 
 	// MARK: -
 	//---------------------------------------------------------------------------------------------------------------------------------------------
