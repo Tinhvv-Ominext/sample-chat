@@ -53,6 +53,7 @@ class RCMessagesView: UIViewController {
 		tableView.register(RCMessageVideoCell.self, forCellReuseIdentifier: "RCMessageVideoCell")
 		tableView.register(RCMessageAudioCell.self, forCellReuseIdentifier: "RCMessageAudioCell")
 		tableView.register(RCMessageLocationCell.self, forCellReuseIdentifier: "RCMessageLocationCell")
+        tableView.register(RCMessageFileCell.self, forCellReuseIdentifier: "RCMessageFileCell")
 
 		tableView.register(RCFooterUpperCell.self, forCellReuseIdentifier: "RCFooterUpperCell")
 		tableView.register(RCFooterLowerCell.self, forCellReuseIdentifier: "RCFooterLowerCell")
@@ -363,7 +364,7 @@ extension RCMessagesView: UITableViewDataSource {
 			if (rcmessage.type == MESSAGE_PHOTO)	{ return cellForMessagePhoto(tableView, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_VIDEO)	{ return cellForMessageVideo(tableView, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_AUDIO)	{ return cellForMessageAudio(tableView, at: indexPath)		}
-            if (rcmessage.type == MESSAGE_FILE)    { return cellForMessageText(tableView, at: indexPath)        }
+            if (rcmessage.type == MESSAGE_FILE)    { return cellForMessageFile(tableView, at: indexPath)        }
 			if (rcmessage.type == MESSAGE_LOCATION)	{ return cellForMessageLocation(tableView, at: indexPath)	}
 		}
 
@@ -396,6 +397,14 @@ extension RCMessagesView: UITableViewDataSource {
 		cell.bindData(self, at: indexPath)
 		return cell
 	}
+    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    func cellForMessageFile(_ tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RCMessageFileCell", for: indexPath) as! RCMessageFileCell
+        cell.bindData(self, at: indexPath)
+        return cell
+    }
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	func cellForMessageEmoji(_ tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
@@ -482,7 +491,7 @@ extension RCMessagesView: UITableViewDelegate {
 			if (rcmessage.type == MESSAGE_EMOJI)	{ return RCMessageEmojiCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_PHOTO)	{ return RCMessagePhotoCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_VIDEO)	{ return RCMessageVideoCell.height(self, at: indexPath)		}
-            if (rcmessage.type == MESSAGE_FILE)    { return RCMessageTextCell.height(self, at: indexPath)        }
+            if (rcmessage.type == MESSAGE_FILE)    { return RCMessageFileCell.height(self, at: indexPath)        }
 			if (rcmessage.type == MESSAGE_AUDIO)	{ return RCMessageAudioCell.height(self, at: indexPath)		}
 			if (rcmessage.type == MESSAGE_LOCATION)	{ return RCMessageLocationCell.height(self, at: indexPath)	}
 		}

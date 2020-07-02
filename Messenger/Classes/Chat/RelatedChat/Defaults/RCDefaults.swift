@@ -83,11 +83,16 @@ enum RCDefaults {
 	static let textTextColorIncoming		= UIColor.black
 
 	static let textFont						= UIFont.systemFont(ofSize: 16)
+    static let subTextFont                        = UIFont.systemFont(ofSize: 12)
 
 	static let textInsetLeft				= CGFloat(10)
 	static let textInsetRight				= CGFloat(10)
 	static let textInsetTop					= CGFloat(10)
 	static let textInsetBottom				= CGFloat(10)
+    
+    static let iconSize                = CGFloat(20)
+    static let downloadButtonSize                = CGFloat(40)
+    static let commonMargin = CGFloat(8)
 
 	static let textInset = UIEdgeInsets.init(top: textInsetTop, left: textInsetLeft, bottom: textInsetBottom, right: textInsetRight)
 
