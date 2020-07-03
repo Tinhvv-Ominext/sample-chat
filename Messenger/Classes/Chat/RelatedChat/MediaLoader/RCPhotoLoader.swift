@@ -15,37 +15,37 @@ import UIKit
 class RCPhotoLoader: NSObject {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func start(_ rcmessage: RCMessage, in tableView: UITableView) {
+    class func start(_ rcmessage: RCMessage, in tableView: UITableView, at: IndexPath) {
 
 		if let path = MediaDownload.pathPhoto(rcmessage.messageId) {
 			showMedia(rcmessage, path: path)
 		} else {
-			loadMedia(rcmessage, in: tableView)
+			loadMedia(rcmessage, in: tableView, at: at)
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	class func manual(_ rcmessage: RCMessage, in tableView: UITableView) {
+	class func manual(_ rcmessage: RCMessage, in tableView: UITableView, at: IndexPath) {
 
 		MediaDownload.clearManualPhoto(rcmessage.messageId)
-		downloadMedia(rcmessage, in: tableView)
+		downloadMedia(rcmessage, in: tableView, at: at)
 		tableView.reloadData()
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private class func loadMedia(_ rcmessage: RCMessage, in tableView: UITableView) {
+	private class func loadMedia(_ rcmessage: RCMessage, in tableView: UITableView, at: IndexPath) {
 
 		let network = Persons.networkPhoto()
 
 		if (network == NETWORK_MANUAL) || ((network == NETWORK_WIFI) && (Connectivity.isReachableViaWiFi() == false)) {
 			rcmessage.mediaStatus = MEDIASTATUS_MANUAL
 		} else {
-			downloadMedia(rcmessage, in: tableView)
+			downloadMedia(rcmessage, in: tableView, at: at)
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	private class func downloadMedia(_ rcmessage: RCMessage, in tableView: UITableView) {
+	private class func downloadMedia(_ rcmessage: RCMessage, in tableView: UITableView, at: IndexPath) {
 
 		rcmessage.mediaStatus = MEDIASTATUS_LOADING
 
@@ -56,7 +56,7 @@ class RCPhotoLoader: NSObject {
 			} else {
 				rcmessage.mediaStatus = MEDIASTATUS_MANUAL
 			}
-			tableView.reloadData()
+            tableView.reloadRows(at: [at], with: .none)
 		}
 	}
 

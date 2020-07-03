@@ -177,26 +177,26 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 
 		if let rcmessage = rcmessages[message.objectId] {
 			rcmessage.update(message)
-			loadMedia(rcmessage)
+            loadMedia(rcmessage, at: indexPath)
 			return rcmessage
 		}
 
 		let rcmessage = RCMessage(message: message)
 		rcmessages[message.objectId] = rcmessage
-		loadMedia(rcmessage)
+        loadMedia(rcmessage, at: indexPath)
 		return rcmessage
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	func loadMedia(_ rcmessage: RCMessage) {
+    func loadMedia(_ rcmessage: RCMessage, at: IndexPath) {
 
 		if (rcmessage.mediaStatus != MEDIASTATUS_UNKNOWN)	 { return }
 		if (rcmessage.incoming) && (rcmessage.isMediaQueued) { return }
 		if (rcmessage.incoming) && (rcmessage.isMediaFailed) { return }
 
-		if (rcmessage.type == MESSAGE_PHOTO)	{ RCPhotoLoader.start(rcmessage, in: tableView)		}
-		if (rcmessage.type == MESSAGE_VIDEO)	{ RCVideoLoader.start(rcmessage, in: tableView)		}
-		
+        if (rcmessage.type == MESSAGE_PHOTO)	{ RCPhotoLoader.start(rcmessage, in: tableView, at: at)		}
+        if (rcmessage.type == MESSAGE_VIDEO)	{ RCVideoLoader.start(rcmessage, in: tableView, at: at)		}
+		if (rcmessage.type == MESSAGE_FILE)    { RCFileLoader.start(rcmessage, in: tableView, at: at)        }
 	}
 
 	// MARK: - Avatar methods
@@ -520,8 +520,8 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 		let rcmessage = rcmessageAt(indexPath)
 
 		if (rcmessage.mediaStatus == MEDIASTATUS_MANUAL) {
-			if (rcmessage.type == MESSAGE_PHOTO) { RCPhotoLoader.manual(rcmessage, in: tableView) }
-			if (rcmessage.type == MESSAGE_VIDEO) { RCVideoLoader.manual(rcmessage, in: tableView) }
+            if (rcmessage.type == MESSAGE_PHOTO) { RCPhotoLoader.manual(rcmessage, in: tableView, at: indexPath) }
+            if (rcmessage.type == MESSAGE_VIDEO) { RCVideoLoader.manual(rcmessage, in: tableView, at: indexPath) }
 		}
 
 		if (rcmessage.mediaStatus == MEDIASTATUS_SUCCEED) {
@@ -556,6 +556,11 @@ class RCPrivateChatView: RCMessagesView, UIGestureRecognizerDelegate {
 				let navController = NavigationController(rootViewController: mapView)
 				present(navController, animated: true)
 			}
+            if (rcmessage.type == MESSAGE_FILE) {
+                let vc = FilePreviewViewController()
+                vc.message = rcmessage
+                present(vc, animated: true)
+            }
 		}
 	}
 

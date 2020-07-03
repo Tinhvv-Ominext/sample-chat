@@ -48,6 +48,7 @@ class RCMessage: NSObject {
 
 	var videoPath: String = ""
 	var audioPath: String = ""
+    var filePath: String = ""
 
 	var photoImage: UIImage?
 	var videoThumbnail: UIImage?

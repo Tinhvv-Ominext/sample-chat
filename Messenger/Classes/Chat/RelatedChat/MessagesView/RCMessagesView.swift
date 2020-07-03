@@ -395,7 +395,15 @@ extension RCMessagesView: UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "RCMessageFileCell", for: indexPath) as! RCMessageFileCell
         cell.bindData(self, at: indexPath)
+        cell.downloadHandler = { [weak self] index in
+            self?.downloadFileTapped(at: index)
+        }
         return cell
+    }
+    
+    func downloadFileTapped(at: IndexPath) {
+        let rcmessage = rcmessageAt(at)
+        RCFileLoader.start(rcmessage, in: tableView, at: at)
     }
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------

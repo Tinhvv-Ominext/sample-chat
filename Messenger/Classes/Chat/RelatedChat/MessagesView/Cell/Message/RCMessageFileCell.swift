@@ -16,6 +16,8 @@ class RCMessageFileCell: RCMessageCell {
     private var sizeLabel: UILabel!
     private var button: UIButton!
     
+    var downloadHandler: (IndexPath) -> Void = {_ in}
+    
     //---------------------------------------------------------------------------------------------------------------------------------------------
     override func bindData(_ messagesView: RCMessagesView, at indexPath: IndexPath) {
 
@@ -52,6 +54,7 @@ class RCMessageFileCell: RCMessageCell {
         if button == nil {
             button = UIButton()
             button.setImage(UIImage(named: "callvideo_answer"), for: .normal)
+            button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
             viewBubble.addSubview(button)
         }
 
@@ -73,6 +76,14 @@ class RCMessageFileCell: RCMessageCell {
         sizeLabel.frame = CGRect(x: icon.frame.origin.x + icon.frame.width + RCDefaults.textInsetLeft, y: textView.frame.size.height - RCDefaults.textInsetBottom, width: textView.frame.width, height: RCDefaults.headerLowerHeight)
         
         button.frame = CGRect(x: textView.frame.origin.x + textView.frame.width - RCDefaults.commonMargin, y: (size.height - RCDefaults.downloadButtonSize) / 2, width: RCDefaults.downloadButtonSize, height: RCDefaults.downloadButtonSize)
+    }
+    
+    @objc private func buttonTapped() {
+        downloadHandler(indexPath)
+    }
+    
+    func updateProgress(_ percent: Double) {
+        sizeLabel.text = "\(percent)%"
     }
 
     // MARK: - Size methods
